@@ -22,7 +22,13 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
   };
-
+  config.session = {
+    key: 'SESSION_ID', // 设置session cookie里面的key
+    maxAge: 1000 * 60 * 30, // 设置过期时间
+    httpOnly: true,
+    encrypt: true,
+    renew: true, // renew等于true 那么每次刷新页面的时候 session都会被延期
+  };
   config.mysql = {
     // database configuration
     client: {
@@ -49,7 +55,8 @@ module.exports = appInfo => {
     csrf: {
       enable: false,
     },
-    domainWhiteList: [ '*' ],
+    // eslint-disable-next-line array-bracket-spacing
+    domainWhiteList: ['*'],
   };
   config.cors = {
     // origin: '*',

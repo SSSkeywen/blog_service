@@ -2,7 +2,7 @@
  * @Author: mikey.wf
  * @Date: 2020-11-03 14:57:08
  * @Last Modified by: mikey.wf
- * @Last Modified time: 2020-11-09 17:41:07
+ * @Last Modified time: 2020-11-10 17:47:49
  */
 'use strict';
 
@@ -13,4 +13,7 @@ module.exports = app => {
   router.post('/admin/checkLogin', controller.admin.main.checkLogin);
   router.get('/admin/getTypeInfo', adminauth, controller.admin.main.getTypeInfo);
   router.post('/admin/addArticle', adminauth, controller.admin.main.addArticle);
+  router.post('/admin/updateArticle', adminauth, controller.admin.main.updateArticle);
+  router.get('/admin/getArticleList', adminauth, controller.admin.main.getArticleList);
+  router.get('/admin/delArticle/:id', adminauth, controller.admin.main.delArticle);
 };

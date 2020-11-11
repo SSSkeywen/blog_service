@@ -2,7 +2,7 @@
  * @Author: mikey.wf
  * @Date: 2020-11-03 14:54:43
  * @Last Modified by: mikey.wf
- * @Last Modified time: 2020-11-09 17:40:12
+ * @Last Modified time: 2020-11-10 17:55:41
  */
 'use strict';
 
@@ -32,7 +32,7 @@ class MainController extends Controller {
     const resType = await this.app.mysql.select('type');
     this.ctx.body = { data: resType };
   }
-
+  // 新增文章
   async addArticle() {
     const tmpArticle = this.ctx.request.body;
     const result = await this.app.mysql.insert('article', tmpArticle);
@@ -43,6 +43,36 @@ class MainController extends Controller {
       isSuccess: insertSuccess,
       insertId,
     };
+  }
+  // 修改文章
+  async updateArticle() {
+    const tmpArticle = this.ctx.request.body;
+    const result = await this.app.mysql.update('article', tmpArticle);
+    const insertSuccess = result.affectedRows === 1;
+
+    this.ctx.body = {
+      isSuccess: insertSuccess,
+    };
+  }
+  // 获取文章列表
+  async getArticleList() {
+    const sql = 'SELECT article.id as id,' +
+      'article.title as title,' +
+      'article.introduce as introduce,' +
+      'article.view_count as view_count,' +
+      "FROM_UNIXTIME(article.addTime,'%Y-%m-%d' ) as addTime," +
+      'type.typeName as typeName ' +
+      'FROM article LEFT JOIN type ON article.type_id = type.Id ' +
+      'ORDER BY article.id DESC ';
+
+    const resList = await this.app.mysql.query(sql);
+    this.ctx.body = { list: resList };
+  }
+  // 删除文章
+  async delArticle() {
+    const id = this.ctx.params.id;
+    const res = await this.app.mysql.delete('article', { id });
+    this.ctx.body = { data: res };
   }
 }
 
