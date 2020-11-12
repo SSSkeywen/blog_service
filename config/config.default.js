@@ -54,13 +54,16 @@ module.exports = appInfo => {
   config.security = {
     csrf: {
       enable: false,
+      ignoreJSON: true,
     },
     // eslint-disable-next-line array-bracket-spacing
     domainWhiteList: ['*'],
   };
   config.cors = {
     // origin: '*',
-    origin: 'http://127.0.0.1:3000',
+    // eslint-disable-next-line array-bracket-spacing
+    origin: ['http://127.0.0.1:3000'],
+    // origin: 'http://127.0.0.1:3000',
     credentials: true, // 允许Cook跨域
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };

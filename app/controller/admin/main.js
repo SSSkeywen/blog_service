@@ -2,7 +2,7 @@
  * @Author: mikey.wf
  * @Date: 2020-11-03 14:54:43
  * @Last Modified by: mikey.wf
- * @Last Modified time: 2020-11-10 17:55:41
+ * @Last Modified time: 2020-11-12 14:49:49
  */
 'use strict';
 
@@ -73,6 +73,22 @@ class MainController extends Controller {
     const id = this.ctx.params.id;
     const res = await this.app.mysql.delete('article', { id });
     this.ctx.body = { data: res };
+  }
+  // 修改文章
+  async getArticleById() {
+    const id = this.ctx.params.id;
+    const sql = 'SELECT article.id as id,' +
+      'article.title as title,' +
+      'article.introduce as introduce,' +
+      'article.article_content as article_content,' +
+      'article.view_count as view_count,' +
+      "FROM_UNIXTIME(article.addTime,'%Y-%m-%d' ) as addTime," +
+      'type.typeName as typeName, ' +
+      'type.id as typeId ' +
+      'FROM article LEFT JOIN type ON article.type_id = type.Id ' +
+      'WHERE article.id=' + id;
+    const result = await this.app.mysql.query(sql);
+    this.ctx.body = { data: result };
   }
 }
 
