@@ -2,7 +2,7 @@
  * @Author: mikey.wf
  * @Date: 2020-11-03 14:54:43
  * @Last Modified by: mikey.wf
- * @Last Modified time: 2020-11-12 14:49:49
+ * @Last Modified time: 2020-11-12 16:56:08
  */
 'use strict';
 
@@ -63,7 +63,7 @@ class MainController extends Controller {
       "FROM_UNIXTIME(article.addTime,'%Y-%m-%d' ) as addTime," +
       'type.typeName as typeName ' +
       'FROM article LEFT JOIN type ON article.type_id = type.Id ' +
-      'ORDER BY article.id DESC ';
+      'ORDER BY article.id DESC '; // 倒序
 
     const resList = await this.app.mysql.query(sql);
     this.ctx.body = { list: resList };
